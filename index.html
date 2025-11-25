@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Surprise: Selamat Wisuda Cinta 🎓</title>
-    <meta name="description" content="Kejutan interaktif: Selamat Wisuda Cinta — 26 Nov 2025" />
+    <title>Surprise: Selamat Wisuda Dangga 🎓</title>
+    <meta name="description" content="Kejutan interaktif: Selamat Wisuda Dangga — D3 Kebidanan, 26 Nov 2025" />
     <style>
       :root {
         --bg: #fff7fb;
@@ -227,46 +227,42 @@
           opacity: 0;
         }
       }
-      /* ─────────── RESPONSIVE MOBILE ONLY (Tidak mengubah laptop) ─────────── */
 
-@media (max-width: 430px) {
+      @media (max-width: 430px) {
+        .header {
+          flex-direction: column;
+          text-align: center;
+          gap: 10px;
+        }
 
-  .header {
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
-  }
+        .thumb {
+          width: 70px;
+          height: 70px;
+        }
 
-  .thumb {
-    width: 70px;
-    height: 70px;
-  }
+        h1 {
+          font-size: 18px;
+        }
 
-  h1 {
-    font-size: 18px;
-  }
+        .sub {
+          font-size: 12px;
+        }
 
-  .sub {
-    font-size: 12px;
-  }
+        .big-photo {
+          max-width: 260px;
+          margin-top: 10px;
+        }
 
-  .big-photo {
-    max-width: 260px;
-    margin-top: 10px;
-  }
+        .actions-row {
+          flex-direction: column;
+        }
 
-  .actions-row {
-    flex-direction: column;
-  }
-
-  .reveal-btn,
-  .sneak-btn {
-    width: 100%;
-    max-width: 260px;
-  }
-}
-
-
+        .reveal-btn,
+        .sneak-btn {
+          width: 100%;
+          max-width: 260px;
+        }
+      }
     </style>
   </head>
 
@@ -282,8 +278,11 @@
 
         <div class="heading">
           <h1>Selamat Wisuda, Arisa Bibiana, A.Md.Keb 🎓</h1>
-          <div class="sub">26 November 2025 • Salam hangat dari jauh</div>
+          <div class="sub">D3 Kebidanan — 26 November 2025 • Salam hangat dari jauh</div>
         </div>
+
+        <div class="date-badge">26 Nov 2025</div>
+      </div>
 
       <div class="main">
         <div class="intro">Hai Cantik — gimana kabar? Lama tak jumpa wkwkwk. Klik tombol di bawah untuk melihat kejutan kecil.</div>
@@ -313,7 +312,7 @@
 
     <script>
       const fromName = "🫂";
-      const toName = "Cinta";
+      const toName = "Dangga";
       const messageText = `Selamat wisuda, ${toName}! 🎓
 
 Aku sangat bangga pada perjuangan, kerja keras, dan ketekunanmu.
