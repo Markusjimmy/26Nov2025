@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Surprise: Selamat Wisuda Dangga 🎓</title>
+    <meta name="description" content="Kejutan interaktif: Selamat Wisuda Dangga — D3 Kebidanan, 26 Nov 2025" />
+    <style>
+      :root {
+        --bg: #fff7fb;
+        --accent: #e76f9a;
+        --muted: #6b6b76;
+        --card: #ffffff;
+        --success: #56c0a2;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+        background: radial-gradient(circle at 10% 10%, #fff2f8 0%, #fff7fb 40%), linear-gradient(180deg, #fffafc 0%, #fff7fb 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        color: #222;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 920px;
+        background: var(--card);
+        border-radius: 14px;
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .header {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        padding: 18px 22px;
+        background: linear-gradient(90deg, rgba(231, 111, 154, 0.06), rgba(255, 244, 247, 0.02));
+      }
+      .thumb {
+        width: 92px;
+        height: 92px;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 4px solid #fff;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      }
+      .thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .heading {
+        flex: 1;
+      }
+      h1 {
+        margin: 0;
+        font-size: 20px;
+        color: var(--accent);
+      }
+      .sub {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .date-badge {
+        background: #fff6ea;
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-weight: 700;
+        color: #b07b2f;
+      }
+
+      .main {
+        padding: 26px;
+        text-align: center;
+      }
+      .intro {
+        font-size: 18px;
+        margin: 6px 0 12px;
+        color: #2b2b30;
+      }
+      .hint {
+        color: var(--muted);
+        margin-bottom: 18px;
+      }
+
+      .big-photo {
+        width: 260px;
+        height: 260px;
+        border-radius: 16px;
+        margin: 10px auto 18px;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        transform: translateY(14px);
+        opacity: 0;
+        transition: all 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      .big-photo.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .actions-row {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        align-items: center;
+        margin-top: 8px;
+        flex-wrap: wrap;
+        position: relative;
+      }
+      .reveal-btn {
+        padding: 12px 20px;
+        border-radius: 12px;
+        border: 0;
+        background: linear-gradient(90deg, #ff99b6, #ff5c86);
+        color: #fff;
+        font-weight: 800;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .sneak-btn {
+        padding: 10px 16px;
+        border-radius: 12px;
+        border: 0;
+        background: #fff;
+        color: var(--muted);
+        cursor: pointer;
+        font-weight: 800;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+        transition: transform 0.18s ease;
+        position: relative;
+      }
+
+      .letter {
+        margin: 20px auto 8px;
+        max-width: 720px;
+        text-align: left;
+        background: linear-gradient(180deg, #fff, #fff8fb);
+        border-radius: 12px;
+        padding: 18px 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+        opacity: 0;
+        transform: translateY(12px) scale(0.995);
+        transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      .letter.show {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+      .controls {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 14px;
+        flex-wrap: wrap;
+      }
+
+      .btn-plain {
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: 1px solid #f0dfe6;
+        background: #fff;
+        color: var(--muted);
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .btn-wa {
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: 0;
+        background: linear-gradient(90deg, var(--success), #2abf9b);
+        color: #fff;
+        cursor: pointer;
+        font-weight: 700;
+      }
+
+      #confetti,
+      #petals {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      .big-photo {
+        width: 100%;
+        max-width: 320px; /* biar tetap estetis */
+        height: auto;
+      }
+      .big-photo img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+
+      /* ─────────── Efek Love Terbang ─────────── */
+      .love {
+        position: fixed;
+        bottom: -20px;
+        font-size: 28px;
+        animation: flyUp 4s linear forwards;
+        pointer-events: none;
+        opacity: 0.9;
+      }
+
+      @keyframes flyUp {
+        0% {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-120vh) scale(1.8);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <canvas id="confetti"></canvas>
+    <div id="petals"></div>
+
+    <div class="card">
+      <div class="header">
+        <div class="thumb">
+          <img id="mini" src="Image/WhatsApp Image 2025-10-17 at 09.50.31_04dcf0ca.jpg" />
+        </div>
+
+        <div class="heading">
+          <h1>Selamat Wisuda, Arisa Bibiana, A.Md.Keb 🎓</h1>
+          <div class="sub">D3 Kebidanan — 26 November 2025 • Salam hangat dari jauh</div>
+        </div>
+
+        <div class="date-badge">26 Nov 2025</div>
+      </div>
+
+      <div class="main">
+        <div class="intro">Hai Cantik — gimana kabar? Lama tak jumpa wkwkwk. Klik tombol di bawah untuk melihat kejutan kecil.</div>
+        <div class="hint">(Tenang, ini bukan nembak 😄)</div>
+
+        <div class="big-photo" id="photoWrap">
+          <img src="Image/Da.jpg" alt="Dangga Wisuda" />
+        </div>
+
+        <div class="actions-row">
+          <button id="revealBtn" class="reveal-btn">Klik di sini 💌</button>
+          <button id="sneakBtn" class="sneak-btn">Klik kalau nggak kepo 😝</button>
+        </div>
+
+        <div class="letter" id="letter">
+          <h3 id="letterTitle">Ucapan Khusus</h3>
+          <p id="letterText">[Pesan akan muncul setelah kamu klik tombol di atas]</p>
+        </div>
+
+        <div class="controls" id="controls" style="display: none">
+          <button id="playBtn" class="btn-plain">Putar Musik</button>
+        </div>
+      </div>
+    </div>
+
+    <audio id="bgMusic" src="Image/Hindia - Ramai Sepi Bersama (Official Lyric Video) [tVj5jUW4LvI].mp3" loop></audio>
+
+    <script>
+      const fromName = "🫂";
+      const toName = "Dangga";
+      const messageText = `Selamat wisuda, ${toName}! 🎓
+
+Aku sangat bangga pada perjuangan, kerja keras, dan ketekunanmu.
+Walau aku tidak bisa hadir, doa dan dukunganku selalu menyertaimu.
+Semoga panggilanmu sebagai bidan membawa banyak berkat bagi banyak orang.
+
+Peluk hangat dari jauh — ${fromName}.`;
+
+      const revealBtn = document.getElementById("revealBtn");
+      const sneakBtn = document.getElementById("sneakBtn");
+      const letter = document.getElementById("letter");
+      const letterText = document.getElementById("letterText");
+      const letterTitle = document.getElementById("letterTitle");
+      const controls = document.getElementById("controls");
+      const playBtn = document.getElementById("playBtn");
+      const bigPhoto = document.getElementById("photoWrap");
+      const bgMusic = document.getElementById("bgMusic");
+
+      let revealed = false;
+
+      function revealAll() {
+        if (revealed) return;
+        revealed = true;
+
+        bigPhoto.classList.add("show");
+        letter.classList.add("show");
+        letterTitle.innerText = `Ucapan & Doa`;
+
+        let i = 0;
+        letterText.innerText = "";
+        function type() {
+          if (i <= messageText.length) {
+            letterText.innerText = messageText.slice(0, i);
+            i++;
+            setTimeout(type, 18);
+          } else {
+            controls.style.display = "flex";
+          }
+        }
+        type();
+
+        bgMusic.play().catch(() => {});
+      }
+
+      revealBtn.addEventListener("click", revealAll);
+
+      function moveSneak() {
+        const x = (Math.random() - 0.5) * 240;
+        const y = (Math.random() - 0.5) * 120;
+        sneakBtn.style.transform = `translate(${x}px, ${y}px)`;
+      }
+
+      sneakBtn.addEventListener("mouseenter", moveSneak);
+      sneakBtn.addEventListener("click", moveSneak);
+      sneakBtn.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        moveSneak();
+      });
+
+      let musicOn = false;
+      playBtn.addEventListener("click", () => {
+        if (!musicOn) {
+          bgMusic.play();
+          musicOn = true;
+          playBtn.innerText = "⏸️";
+        } else {
+          bgMusic.pause();
+          musicOn = false;
+          playBtn.innerText = "▶️";
+        }
+      });
+
+      /* ─────────── Efek LOVE Terbang ─────────── */
+
+      function spawnLove() {
+        const love = document.createElement("div");
+        love.classList.add("love");
+        love.innerText = "💗";
+
+        love.style.left = Math.random() * window.innerWidth + "px";
+
+        document.body.appendChild(love);
+
+        setTimeout(() => {
+          love.remove();
+        }, 4000);
+      }
+
+      revealBtn.addEventListener("click", () => {
+        const loveInterval = setInterval(() => {
+          if (bgMusic.paused) {
+            clearInterval(loveInterval);
+            return;
+          }
+          spawnLove();
+        }, 300);
+      });
+    </script>
+  </body>
+</html>
